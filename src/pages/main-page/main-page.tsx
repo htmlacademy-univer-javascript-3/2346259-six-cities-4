@@ -1,4 +1,4 @@
-import OfferCard from './offerCard';
+import OfferCard from '../../components/offer-card/offer-card';
 
 type MainPageProps = {
   offersNumber: number;
