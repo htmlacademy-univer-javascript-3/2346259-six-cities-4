@@ -22,7 +22,7 @@ export const offers: Offer[] = [
     'isFavorite': false,
     'isPremium': false,
     'rating': 4,
-    'previewImage': 'https://url-to-image/image.png'
+    'previewImage': 'https://farm6.staticflickr.com/5497/11789066804_bbc2d665f4_z.jpg'
   },
 
 
@@ -47,7 +47,7 @@ export const offers: Offer[] = [
     'isFavorite': true,
     'isPremium': false,
     'rating': 4,
-    'previewImage': 'https://url-to-image/image.png'
+    'previewImage': 'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__live_banner__lb_image__1880bp/public/live_banner/Busan-1.jpg'
   },
 
 
@@ -72,7 +72,7 @@ export const offers: Offer[] = [
     'isFavorite': false,
     'isPremium': true,
     'rating': 4,
-    'previewImage': 'https://url-to-image/image.png'
+    'previewImage': 'https://planetofhotels.com/guide/sites/default/files/styles/node__blog_post__bp_banner/public/2021-09/tokyo.jpg'
   },
 
 
@@ -97,6 +97,6 @@ export const offers: Offer[] = [
     'isFavorite': true,
     'isPremium': true,
     'rating': 4,
-    'previewImage': 'https://url-to-image/image.png'
+    'previewImage': 'https://kartinki.pics/pics/uploads/posts/2022-08/thumbs/1660319253_2-kartinkin-net-p-pekin-krasivo-foto-2.jpg'
   }
 ];

@@ -39,7 +39,7 @@ function Favorites({favorites}: FavoritesScreenProps): JSX.Element {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{favorites.length}</span>
                   </a>
                 </li>
                 <li className="header__nav-item">
@@ -70,7 +70,7 @@ function Favorites({favorites}: FavoritesScreenProps): JSX.Element {
                   </div>
                   <div className="favorites__places">
                     {favoritesMap[city].map((place) => (
-                      <OfferCard key={place.id} offerCardInfo={place}/>
+                      <OfferCard key={place.id} offerCardInfo={place} offerCardType={'typical'}/>
                     ))}
                   </div>
                 </li>
