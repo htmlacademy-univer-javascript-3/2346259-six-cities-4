@@ -1,5 +1,8 @@
-const Setting = {
+export const Setting = {
   offersNumber: 5
 };
 
-export default Setting;
+export const URL_MARKER_DEFAULT =
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+
+export default {Setting, URL_MARKER_DEFAULT};

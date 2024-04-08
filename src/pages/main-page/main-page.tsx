@@ -1,6 +1,7 @@
 //import OfferCard from '../../components/offer-card/offer-card';
 import OfferCards from '../../components/offer-cards/offer-cards';
 import { Offer } from '../../types/offer';
+import Map from '../../components/map/map.tsx';
 
 type MainPageProps = {
   offersNumber: number;
@@ -103,7 +104,9 @@ function MainPage({offersNumber, offers}: MainPageProps): JSX.Element {
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <section className="cities__map map">
+                <Map city={offers[0].city} points={offers}/>
+              </section>
             </div>
           </div>
         </div>

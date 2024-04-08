@@ -1,22 +1,22 @@
-import { Offer } from '../types/offer';
+import {Offer} from '../types/offer';
 
 export const offers: Offer[] = [
   {
     'id': '0',
     'title': 'Beautiful & luxurious studio at great location',
     'type': 'apartment',
-    'price': 110,
+    'price': 120,
     'city': {
       'name': 'Amsterdam',
       'location': {
-        'latitude': 72.35514938496378,
-        'longitude': 4.673877537499948,
+        'latitude': 52.3909553943508,
+        'longitude': 4.85309666406198,
         'zoom': 8
       }
     },
     'location': {
-      'latitude': 72.35514938496378,
-      'longitude': 4.673877537499948,
+      'latitude': 52.3909553943508,
+      'longitude': 4.85309666406198,
       'zoom': 8
     },
     'isFavorite': false,
@@ -30,18 +30,18 @@ export const offers: Offer[] = [
     'id': '1',
     'title': 'Beautiful & luxurious studio at great location',
     'type': 'apartment',
-    'price': 150,
+    'price': 120,
     'city': {
-      'name': 'Paris',
+      'name': 'Amsterdam',
       'location': {
-        'latitude': 52.35514938496378,
-        'longitude': 4.673877537499948,
+        'latitude': 52.3609553943508,
+        'longitude': 4.85309666406198,
         'zoom': 8
       }
     },
     'location': {
-      'latitude': 52.35514938496378,
-      'longitude': 4.673877537499948,
+      'latitude': 52.3609553943508,
+      'longitude': 4.85309666406198,
       'zoom': 8
     },
     'isFavorite': true,
@@ -59,14 +59,14 @@ export const offers: Offer[] = [
     'city': {
       'name': 'Amsterdam',
       'location': {
-        'latitude': 52.35514938496378,
-        'longitude': 4.673877537499948,
+        'latitude': 52.3909553943508,
+        'longitude': 4.929309666406198,
         'zoom': 8
       }
     },
     'location': {
-      'latitude': 52.35514938496378,
-      'longitude': 4.673877537499948,
+      'latitude': 52.3909553943508,
+      'longitude': 4.929309666406198,
       'zoom': 8
     },
     'isFavorite': false,
@@ -84,14 +84,14 @@ export const offers: Offer[] = [
     'city': {
       'name': 'Amsterdam',
       'location': {
-        'latitude': 52.35514938496378,
-        'longitude': 4.673877537499948,
+        'latitude': 52.3809553943508,
+        'longitude': 4.939309666406198,
         'zoom': 8
       }
     },
     'location': {
-      'latitude': 52.35514938496378,
-      'longitude': 4.673877537499948,
+      'latitude': 52.3809553943508,
+      'longitude': 4.939309666406198,
       'zoom': 8
     },
     'isFavorite': true,
