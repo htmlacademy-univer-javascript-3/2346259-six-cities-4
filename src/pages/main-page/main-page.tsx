@@ -6,10 +6,11 @@ import Map from '../../components/map/map.tsx';
 type MainPageProps = {
   offersNumber: number;
   offers: Offer[];
+  favorites: Offer[];
 }
 
 
-function MainPage({offersNumber, offers}: MainPageProps): JSX.Element {
+function MainPage({offersNumber, offers, favorites}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -23,12 +24,12 @@ function MainPage({offersNumber, offers}: MainPageProps): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="#">
+                  <div className="header__nav-link header__nav-link--profile">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
+                    <span className="header__favorite-count">{favorites.length}</span>
+                  </div>
                 </li>
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#">
@@ -100,7 +101,7 @@ function MainPage({offersNumber, offers}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferCards cities={offers} />
+                <OfferCards cities={offers} listType={'typical'}/>
               </div>
             </section>
             <div className="cities__right-section">
