@@ -6,7 +6,7 @@ import useMap from '../../hooks/use-map';
 
 import 'leaflet/dist/leaflet.css';
 import {City, Offer} from '../../types/offer';
-import {URL_MARKER_DEFAULT} from '../../consts/consts.tsx';
+import {URL_MARKER_DEFAULT} from '../../consts/url-marker.tsx';
 
 type MapProps = {
   city: City;
