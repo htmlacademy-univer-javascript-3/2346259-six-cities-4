@@ -2,11 +2,11 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
 import useMap from '../../hooks/use-map';
-
+import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../consts/url-marker.tsx';
+import {useAppSelector} from '../../hooks';
 
 import 'leaflet/dist/leaflet.css';
 import {City, Offer} from '../../types/offer';
-import {URL_MARKER_DEFAULT} from '../../consts/url-marker.tsx';
 
 type MapProps = {
   city: City;
@@ -19,10 +19,20 @@ const defaultCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40]
+});
+
 function Map({city, points}: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+
+  const selectedMarker: null | { id: string } = useAppSelector(
+    (state) => state.selectedMarker
+  );
 
   useEffect(() => {
     if (map) {
@@ -40,7 +50,7 @@ function Map({city, points}: MapProps): JSX.Element {
         });
 
         marker
-          .setIcon(defaultCustomIcon)
+          .setIcon(selectedMarker !== null && point.id === selectedMarker.id ? currentCustomIcon : defaultCustomIcon)
           .addTo(markerLayer);
       });
 
@@ -49,7 +59,7 @@ function Map({city, points}: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points]);
+  }, [map, points, selectedMarker]);
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
