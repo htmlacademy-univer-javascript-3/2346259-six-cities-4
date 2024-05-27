@@ -1,4 +1,6 @@
 import {Review} from '../../types/review';
+import {REVIEW_SIZE} from '../../consts/consts.tsx';
+import {getRating} from '../../utils.ts';
 
 type OneReviewProps = {
   review: Review;
@@ -10,7 +12,7 @@ function OneReview({review}: OneReviewProps): JSX.Element {
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={user.avatarUrl} width="54" height="54"
+          <img className="reviews__avatar user__avatar" src={user.avatarUrl} width={REVIEW_SIZE} height={REVIEW_SIZE}
             alt="Reviews avatar"
           />
         </div>
@@ -19,14 +21,14 @@ function OneReview({review}: OneReviewProps): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: `${rating / 5 * 100}%`}}></span>
+            <span style={{width: getRating(rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">{date}</time>
+        <time className="reviews__time" dateTime={new Date(date).toDateString()}>{new Date(date).toDateString()}</time>
       </div>
     </li>
   );

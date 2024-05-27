@@ -8,20 +8,23 @@ import PrivateRoute from '../private-route/private-route';
 import { AuthorizationStatus } from '../../consts/autorization-status';
 import { Offer } from '../../types/offer.ts';
 import { Review } from '../../types/review.ts';
+import {useAppDispatch, useAppSelector} from '../../hooks/index.ts';
+import {listFilling} from '../../store/action.ts';
 
 type AppProps = {
-  offersNumber: number;
-  offers: Offer[];
   reviews: Review[];
 };
 
-function App({offersNumber, offers, reviews}: AppProps){
+function App({reviews}: AppProps): JSX.Element {
+  const offers: Offer[] = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
+  dispatch(listFilling());
   const favorites = offers.filter((o) => o.isFavorite);
   return(
     <BrowserRouter>
       <Routes>
         <Route path='/'>
-          <Route index element = {<MainPage offersNumber={offersNumber} offers = {offers} favorites={favorites}/>}></Route>
+          <Route index element = {<MainPage favorites={favorites}/>}></Route>
           <Route path='login' element={<Login />}></Route>
           <Route path='favorites' element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
