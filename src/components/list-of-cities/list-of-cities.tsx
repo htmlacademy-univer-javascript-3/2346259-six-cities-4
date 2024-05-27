@@ -10,6 +10,7 @@ type CityProps = {
   name: string;
   cityChangeName: (city: string) => void;
 };
+
 const City = ({name, cityChangeName}: CityProps): JSX.Element => (
   <li className="locations__item" onClick={() => cityChangeName(name)}>
     <a className="locations__item-link tabs__item" href="#">

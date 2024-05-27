@@ -39,4 +39,15 @@ export const BOOKMARK_ICON_WIDTH = '18';
 
 export const BOOKMARK_ICON_HEIGHT = '19';
 
+export const SORTING_WIDTH = '7';
+
+export const SORTING_HEIGHT = '4';
+
+export const SORT_TYPES = {
+  0: 'Popular',
+  1: 'Price: low to high',
+  2: 'Price: high to low',
+  3: 'Top rated first',
+};
+
 //export default Setting;
