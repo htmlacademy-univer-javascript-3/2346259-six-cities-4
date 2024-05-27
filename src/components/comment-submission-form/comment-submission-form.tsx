@@ -1,30 +1,66 @@
-import { SyntheticEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import {sendCommentAction} from '../../store/api-actions.ts';
 
-function CommentSubmissionForm() {
-  const [formState, setFormState] = useState({
+type CommentFromProps = {
+  id: string;
+};
+
+type Rating = {
+  rating: string;
+  comment: string;
+}
+
+const STAR_WIDTH = '37';
+
+const STAR_HEIGHT = '33';
+
+function CommentSubmissionForm({ id }: CommentFromProps) {
+  const [formState, setFormState] = useState<Rating>({
     rating: '',
     comment: '',
   });
+  const dispatch = useAppDispatch();
 
-  const handleCommentChange = (e: SyntheticEvent<HTMLTextAreaElement>) => {
+  const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setFormState((prevState) => ({
       ...prevState,
-      comment: e.currentTarget.value,
+      comment: e.target.value,
     }));
   };
 
-  const handleRatingChange = (e: SyntheticEvent<HTMLInputElement>) => {
+  const handleRatingChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState((prevState) => ({
       ...prevState,
-      rating: e.currentTarget.value,
+      rating: e.target.value,
     }));
+  };
+  const isValid = () =>
+    formState.comment.trim().length > 49 && formState.comment.trim().length < 301 && formState.rating !== '';
 
+  const handleFromSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(
+      sendCommentAction({
+        id,
+        comment: {
+          comment: formState.comment,
+          rating: Number(formState.rating),
+        },
+      })
+    );
+
+    setFormState((prevState) => ({
+      ...prevState,
+      rating: '',
+      comment: '',
+    }));
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" onSubmit={handleFromSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
-        Your review
+          Your review
       </label>
       <div className="reviews__rating-form form__rating">
         <input
@@ -41,7 +77,7 @@ function CommentSubmissionForm() {
           className="reviews__rating-label form__rating-label"
           title="perfect"
         >
-          <svg className="form__star-image" width="37" height="33">
+          <svg className="form__star-image" width={STAR_WIDTH} height={STAR_HEIGHT}>
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -60,7 +96,7 @@ function CommentSubmissionForm() {
           className="reviews__rating-label form__rating-label"
           title="good"
         >
-          <svg className="form__star-image" width="37" height="33">
+          <svg className="form__star-image" width={STAR_WIDTH} height={STAR_HEIGHT}>
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -79,7 +115,7 @@ function CommentSubmissionForm() {
           className="reviews__rating-label form__rating-label"
           title="not bad"
         >
-          <svg className="form__star-image" width="37" height="33">
+          <svg className="form__star-image" width={STAR_WIDTH} height={STAR_HEIGHT}>
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -98,7 +134,7 @@ function CommentSubmissionForm() {
           className="reviews__rating-label form__rating-label"
           title="badly"
         >
-          <svg className="form__star-image" width="37" height="33">
+          <svg className="form__star-image" width={STAR_WIDTH} height={STAR_HEIGHT}>
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -117,7 +153,7 @@ function CommentSubmissionForm() {
           className="reviews__rating-label form__rating-label"
           title="terribly"
         >
-          <svg className="form__star-image" width="37" height="33">
+          <svg className="form__star-image" width={STAR_WIDTH} height={STAR_HEIGHT}>
             <use xlinkHref="#icon-star"></use>
           </svg>
         </label>
@@ -132,20 +168,19 @@ function CommentSubmissionForm() {
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set{' '}
+            To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe your stay
-          with at least <b className="reviews__text-amount">50 characters</b>.
+            with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={!isValid()}
         >
-          Submit
+            Submit
         </button>
       </div>
     </form>
   );
 }
-
 export default CommentSubmissionForm;

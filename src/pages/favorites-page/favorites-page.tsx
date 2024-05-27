@@ -7,6 +7,9 @@ type FavoritesScreenProps = {
   favorites: Offer[];
 };
 
+const LOGO_WIDTH = '64';
+const LOGO_HEIGHT = '33';
+
 function Favorites({favorites}: FavoritesScreenProps): JSX.Element {
   const favoritesMap = favorites.reduce(
     (acc: Record<string, Offer[]>, place: Offer) => {
@@ -50,7 +53,7 @@ function Favorites({favorites}: FavoritesScreenProps): JSX.Element {
       </main>
       <footer className="footer container">
         <Link to="/" className="footer__logo-link">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
+          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width={LOGO_WIDTH} height={LOGO_HEIGHT} />
         </Link>
       </footer>
     </div>

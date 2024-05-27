@@ -1,10 +1,11 @@
 import {Review} from '../../types/review';
-import {REVIEW_SIZE} from '../../consts/consts.tsx';
 import {getRating} from '../../utils.ts';
 
 type OneReviewProps = {
   review: Review;
 };
+
+const REVIEW_SIZE = '54';
 
 function OneReview({review}: OneReviewProps): JSX.Element {
   const {date, user, rating, comment} = review;
