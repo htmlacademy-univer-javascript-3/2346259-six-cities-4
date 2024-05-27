@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 //import Setting from './consts/consts';
 //import { offers } from './mocks/offers';
-import {reviews} from './mocks/reviews';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import ErrorMessage from './components/error-message/error-message';
@@ -21,9 +20,7 @@ root.render(
     {/* <App offersNumber={Setting.offersNumber} offers = {offers} reviews={reviews}/> */}
     <Provider store={store}>
       <ErrorMessage />
-      <App
-        reviews={reviews}
-      />
+      <App/>
     </Provider>
   </React.StrictMode>
 );

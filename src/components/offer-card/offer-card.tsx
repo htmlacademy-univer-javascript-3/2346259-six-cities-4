@@ -1,6 +1,5 @@
 import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
-import {BOOKMARK_ICON_HEIGHT, BOOKMARK_ICON_WIDTH, CITY_CARD_HEIGHT, CITY_CARD_WIDTH} from '../../consts/consts.tsx';
 import {getRating} from '../../utils.ts';
 import {useAppDispatch} from '../../hooks/index.ts';
 import {highlightMarker} from '../../store/action.ts';
@@ -9,6 +8,12 @@ type OfferCardProps = {
   offerCardInfo: Offer;
   offerCardType: 'typical' | 'near';
 };
+
+const CITY_CARD_WIDTH = '260';
+const CITY_CARD_HEIGHT = '200';
+
+const BOOKMARK_ICON_WIDTH = '18';
+const BOOKMARK_ICON_HEIGHT = '19';
 
 function OfferCard({offerCardInfo, offerCardType}: OfferCardProps): JSX.Element {
   const {

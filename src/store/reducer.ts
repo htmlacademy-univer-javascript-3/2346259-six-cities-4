@@ -1,5 +1,5 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {Offer} from '../types/offer';
+import {ExtendedOffer, Offer} from '../types/offer';
 
 import {
   cityChange,
@@ -9,11 +9,19 @@ import {
   setError,
   requireAuthorization,
   setOffersDataLoadingStatus,
-  saveUserEmail
+  loadOfferData,
+  saveUserEmail,
+  sendReview
 } from './action';
 import {AuthorizationStatus} from '../consts/autorization-status';
+import { Review } from '../types/review';
 
 type StateType = {
+  currentOffer: {
+    offerInfo: ExtendedOffer | null;
+    nearestOffers: Offer[];
+    reviews: Review[];
+  };
   city: string;
   offers: Offer[];
   sortType: string;
@@ -27,6 +35,11 @@ type StateType = {
 };
 
 const initialState: StateType = {
+  currentOffer: {
+    offerInfo: null,
+    nearestOffers: [],
+    reviews: [],
+  },
   city: 'Paris',
   offers: [],
   sortType: 'Popular',
@@ -62,6 +75,13 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(saveUserEmail, (state, action) => {
       state.userEmail = action.payload;
+    })
+    .addCase(loadOfferData, (state, { payload }) => {
+      state.selectedMarker = { id: payload.offerInfo.id };
+      state.currentOffer = { ...payload };
+    })
+    .addCase(sendReview, (state, { payload }) => {
+      state.currentOffer.reviews = [...state.currentOffer.reviews, payload];
     });
 });
 

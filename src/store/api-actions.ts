@@ -1,21 +1,32 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state';
 import {AxiosInstance} from 'axios';
-import {Offer} from '../types/offer';
-import {loadOffers, redirectToRoute, requireAuthorization, saveUserEmail, setError, setOffersDataLoadingStatus} from './action.ts';
 import {store} from './index.ts';
 import {APIRoute, TIMEOUT_SHOW_ERROR, AppRoute} from '../consts/consts.tsx';
 import {AuthorizationStatus} from '../consts/autorization-status.tsx';
 import {dropToken, saveToken } from '../services/token.ts';
 import { UserData } from '../types/user-data.ts';
 import { AuthData } from '../types/auth-data.ts';
+import {ExtendedOffer, Offer} from '../types/offer';
+import {
+  loadOfferData,
+  loadOffers,
+  redirectToRoute,
+  requireAuthorization,
+  saveUserEmail,
+  sendReview,
+  setError,
+  setOffersDataLoadingStatus
+} from './action.ts';
+import { Review } from '../types/review.ts';
+import { CommentFormData } from '../types/comment-form-data.ts';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'fetchOfferss',
+  'fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setOffersDataLoadingStatus(true));
     const {data} = await api.get<Offer[]>(APIRoute.Offers);
@@ -78,3 +89,48 @@ export const clearErrorAction = createAsyncThunk(
     );
   },
 );
+
+export const fetchOfferDataAction = createAsyncThunk<
+  void,
+  {
+    id: string;
+  },
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('fetchOfferData', async ({ id }, { dispatch, extra: api }) => {
+  const { data: offerInfo } = await api.get<ExtendedOffer>(
+    `${APIRoute.Offers}/${id}`
+  );
+  const { data: nearestOffers } = await api.get<Offer[]>(
+    `${APIRoute.Offers}/${id}/nearby`
+  );
+  const { data: reviews } = await api.get<Review[]>(
+    `${APIRoute.Comments}/${id}`
+  );
+  dispatch(loadOfferData({ offerInfo, nearestOffers, reviews }));
+});
+
+export const sendCommentAction = createAsyncThunk<
+  void,
+  {
+    comment: CommentFormData;
+    id: string;
+  },
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>('sendComment', async ({ comment, id }, { dispatch, extra: api }) => {
+  const { data: review } = await api.post<Review>(
+    `${APIRoute.Comments}/${id}`,
+    {
+      comment: comment.comment,
+      rating: comment.rating,
+    }
+  );
+  dispatch(sendReview(review));
+});

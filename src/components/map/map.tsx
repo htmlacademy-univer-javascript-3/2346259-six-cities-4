@@ -6,11 +6,12 @@ import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../consts/url-marker.ts
 import {useAppSelector} from '../../hooks';
 
 import 'leaflet/dist/leaflet.css';
-import {City, Offer} from '../../types/offer';
+import {City, Points} from '../../types/offer';
 
 type MapProps = {
   city: City;
-  points: Offer[];
+  points: Points[];
+  specialCaseId: string | undefined;
 };
 
 const defaultCustomIcon = new Icon({
@@ -25,7 +26,7 @@ const currentCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
-function Map({city, points}: MapProps): JSX.Element {
+function Map({city, points, specialCaseId}: MapProps): JSX.Element {
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -35,10 +36,10 @@ function Map({city, points}: MapProps): JSX.Element {
   );
 
   useEffect(() => {
-    if (map) {
+    if (map && city) {
       map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
     }
-  }, [map, city]);
+  }, [city, map]);
 
   useEffect(() => {
     if (map) {
@@ -49,17 +50,29 @@ function Map({city, points}: MapProps): JSX.Element {
           lng: point.location.longitude
         });
 
-        marker
-          .setIcon(selectedMarker !== null && point.id === selectedMarker.id ? currentCustomIcon : defaultCustomIcon)
-          .addTo(markerLayer);
+        if (specialCaseId === undefined){
+          marker
+            .setIcon(selectedMarker !== null && point.id === selectedMarker.id ? currentCustomIcon : defaultCustomIcon)
+            .addTo(markerLayer);
+        } else {
+          const isSpecialCase = specialCaseId && point.id === specialCaseId;
+          marker
+            .setIcon(isSpecialCase ? currentCustomIcon : defaultCustomIcon)
+            .addTo(markerLayer);
+        }
       });
 
       return () => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, points, selectedMarker]);
+  }, [map, points, selectedMarker, specialCaseId]);
+
+  useEffect(() => {
+    if (map && city) {
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
+    }
+  }, [map, city]);
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
