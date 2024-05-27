@@ -98,5 +98,54 @@ export const offers: Offer[] = [
     'isPremium': true,
     'rating': 4,
     'previewImage': 'https://kartinki.pics/pics/uploads/posts/2022-08/thumbs/1660319253_2-kartinkin-net-p-pekin-krasivo-foto-2.jpg'
+
+  },
+
+  {
+    'id': '4',
+    'title': 'Beautiful & luxurious studio at great location',
+    'type': 'apartment',
+    'price': 120,
+    'city': {
+      'name': 'Paris',
+      'location': {
+        'latitude': 48.958276,
+        'longitude': 2.294591,
+        'zoom': 10
+      }
+    },
+    'location': {
+      'latitude': 48.958276,
+      'longitude': 2.294591,
+      'zoom': 10
+    },
+    'isFavorite': true,
+    'isPremium': false,
+    'rating': 4,
+    'previewImage': 'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__live_banner__lb_image__1880bp/public/live_banner/Busan-1.jpg'
+  },
+
+  {
+    'id': '5',
+    'title': 'Beautiful & luxurious studio at great location',
+    'type': 'apartment',
+    'price': 120,
+    'city': {
+      'name': 'Paris',
+      'location': {
+        'latitude': 48.858276,
+        'longitude': 2.294591,
+        'zoom': 10
+      }
+    },
+    'location': {
+      'latitude': 48.858276,
+      'longitude': 2.294591,
+      'zoom': 10
+    },
+    'isFavorite': true,
+    'isPremium': false,
+    'rating': 4,
+    'previewImage': 'https://planetofhotels.com/guide/sites/default/files/styles/paragraph__live_banner__lb_image__1880bp/public/live_banner/Busan-1.jpg'
   }
 ];
