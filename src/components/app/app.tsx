@@ -1,7 +1,7 @@
 import Favorites from '../../pages/favorites-page/favorites-page';
 import Login from '../../pages/login-page/login-page';
 import MainPage from '../../pages/main-page/main-page';
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import OfferPage from '../../pages/offer-page/offer-page';
 import Error404 from '../../pages/error-404/error-404';
 import PrivateRoute from '../private-route/private-route';
@@ -10,6 +10,8 @@ import { Offer } from '../../types/offer.ts';
 import { Review } from '../../types/review.ts';
 import {useAppSelector} from '../../hooks/index.ts';
 import LoadingScreen from '../../pages/loading-screen/loading.screen.tsx';
+import browserHistory from '../../browser-history.tsx';
+import HistoryRouter from '../history-router/history-router.tsx';
 
 type AppProps = {
   reviews: Review[];
@@ -27,7 +29,7 @@ function App({reviews}: AppProps): JSX.Element {
   }
   const favorites = offers.filter((o) => o.isFavorite);
   return(
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route path='/'>
           <Route index element = {<MainPage favorites={favorites}/>}></Route>
@@ -43,7 +45,7 @@ function App({reviews}: AppProps): JSX.Element {
         </Route>
         <Route path='*' element={<Error404 />}></Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
     //<MainPage offersNumber={offersNumber}/>
   );
 }
