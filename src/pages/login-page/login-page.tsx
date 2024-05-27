@@ -1,6 +1,6 @@
 import {FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
-import {Link, useNavigate } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { loginAction } from '../../store/api-actions';
 
 function Login() : JSX.Element{
@@ -9,7 +9,6 @@ function Login() : JSX.Element{
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -22,7 +21,6 @@ function Login() : JSX.Element{
         })
       );
     }
-    navigate('/');
   };
 
   return(
