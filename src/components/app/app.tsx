@@ -8,8 +8,8 @@ import PrivateRoute from '../private-route/private-route';
 import { AuthorizationStatus } from '../../consts/autorization-status';
 import { Offer } from '../../types/offer.ts';
 import { Review } from '../../types/review.ts';
-import {useAppDispatch, useAppSelector} from '../../hooks/index.ts';
-import {listFilling} from '../../store/action.ts';
+import {useAppSelector} from '../../hooks/index.ts';
+import LoadingScreen from '../../pages/loading-screen/loading.screen.tsx';
 
 type AppProps = {
   reviews: Review[];
@@ -17,8 +17,14 @@ type AppProps = {
 
 function App({reviews}: AppProps): JSX.Element {
   const offers: Offer[] = useAppSelector((state) => state.offers);
-  const dispatch = useAppDispatch();
-  dispatch(listFilling());
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+    return (
+      <LoadingScreen/>
+    );
+  }
   const favorites = offers.filter((o) => o.isFavorite);
   return(
     <BrowserRouter>
@@ -27,7 +33,7 @@ function App({reviews}: AppProps): JSX.Element {
           <Route index element = {<MainPage favorites={favorites}/>}></Route>
           <Route path='login' element={<Login />}></Route>
           <Route path='favorites' element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <Favorites favorites={favorites}/>
             </PrivateRoute>
           }
