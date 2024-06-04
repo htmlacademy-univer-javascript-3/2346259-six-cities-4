@@ -5,9 +5,9 @@ import {useAppDispatch} from '../../hooks/index.ts';
 import {highlightMarker} from '../../store/offers-process/offer-process.ts';
 
 
-type CityCardProps = {
-  cityCardInfo: Offer;
-  cityCardType: 'typical' | 'near';
+type OfferCardProps = {
+  offerCardInfo: Offer;
+  offerCardType: 'typical' | 'near';
 };
 
 const CITY_CARD_WIDTH = '260';
@@ -16,7 +16,7 @@ const CITY_CARD_HEIGHT = '200';
 const BOOKMARK_ICON_WIDTH = '18';
 const BOOKMARK_ICON_HEIGHT = '19';
 
-function OfferCard({cityCardInfo, cityCardType}: CityCardProps): JSX.Element {
+function OfferCard({offerCardInfo, offerCardType}: OfferCardProps): JSX.Element {
   const {
     id,
     title,
@@ -28,15 +28,15 @@ function OfferCard({cityCardInfo, cityCardType}: CityCardProps): JSX.Element {
     isPremium,
     rating,
     previewImage,
-  } = cityCardInfo;
+  } = offerCardInfo;
   const dispatch = useAppDispatch();
   return (
     <div onMouseOver={() => dispatch(highlightMarker({id}))}
       onMouseLeave={() => dispatch(highlightMarker(null))}
     >
-      <Link to={`/offer/${id}`} state={cityCardInfo}>
+      <Link to={`/offer/${id}`} state={offerCardInfo}>
         <article
-          className={`${cityCardType === 'typical' ? 'cities__card place-card' : 'near-places__card place-card'}`}
+          className={`${offerCardType === 'typical' ? 'cities__card place-card' : 'near-places__card place-card'}`}
           onClick={() => window.scrollTo(0, 0)}
         >
           {isPremium && (
