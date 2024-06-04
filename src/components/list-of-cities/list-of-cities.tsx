@@ -1,5 +1,6 @@
 import {useAppDispatch} from '../../hooks';
-import {cityChange} from '../../store/action.ts';
+import {memo} from 'react';
+import { cityChange } from '../../store/other-process/other-process';
 
 
 type CitiesListProps = {
@@ -10,7 +11,6 @@ type CityProps = {
   name: string;
   cityChangeName: (city: string) => void;
 };
-
 const City = ({name, cityChangeName}: CityProps): JSX.Element => (
   <li className="locations__item" onClick={() => cityChangeName(name)}>
     <a className="locations__item-link tabs__item" href="#">
@@ -37,4 +37,5 @@ function CitiesList({cities}: CitiesListProps): JSX.Element {
   );
 }
 
-export default CitiesList;
+const CitiesListMemo = memo(CitiesList);
+export default CitiesListMemo;

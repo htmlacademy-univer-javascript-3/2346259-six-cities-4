@@ -52,4 +52,9 @@ export const SORT_TYPES = {
   3: 'Top rated first',
 };
 
-//export default Setting;
+export enum NameSpace {
+  Other = 'OTHER',
+  Offers = 'OFFERS',
+  User = 'USER',
+}
+
