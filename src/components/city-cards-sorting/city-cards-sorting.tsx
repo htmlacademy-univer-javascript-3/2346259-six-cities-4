@@ -1,14 +1,15 @@
 import {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {sortTypeSelect} from '../../store/action.ts';
 import {SORT_TYPES} from '../../consts/consts.tsx';
+import {getSortType} from '../../store/other-process/selectors.ts';
+import { sortTypeSelect } from '../../store/other-process/other-process.ts';
 
 const SORTING_WIDTH = '7';
 const SORTING_HEIGHT = '4';
 
 function CityCardsSorting() {
   const [isOpen, setIsOpen] = useState(false);
-  const selectedSortType = useAppSelector((state) => state.sortType);
+  const selectedSortType = useAppSelector(getSortType);
   const dispatch = useAppDispatch();
   const handleSortTypeChange = (sortType: string) => {
     dispatch(sortTypeSelect(sortType));

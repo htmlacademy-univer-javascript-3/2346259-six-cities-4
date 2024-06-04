@@ -1,32 +1,29 @@
-import Hat from '../../components/hat/hat.tsx';
 import CommentSubmissionForm from '../../components/comment-submission-form/comment-submission-form.tsx';
 import ListOfReviews from '../../components/list-of-reviews/list-of-reviews.tsx';
-import {Offer, Points} from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
-import ListOfCityCards from '../../components/offer-cards/offer-cards.tsx';
-import { useParams } from 'react-router-dom';
-import {useAppDispatch, useAppSelector } from '../../hooks/index.ts';
-import { useEffect } from 'react';
-import { fetchOfferDataAction } from '../../store/api-actions.ts';
+import OfferCards from '../../components/offer-cards/offer-cards.tsx';
+import {Offer, Points} from '../../types/offer.ts';
+import Hat from '../../components/hat/hat.tsx';
+import {useParams} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../hooks/index.ts';
+import {useEffect} from 'react';
+import {fetchOfferDataAction} from '../../store/api-actions.ts';
 import {getRating} from '../../utils.ts';
-import { AuthorizationStatus } from '../../consts/autorization-status.tsx';
-const AVATAR_SIZE = '74';
+import {AuthorizationStatus} from '../../consts/autorization-status.tsx';
+import {selectCurrentOfferData} from '../../store/selectors.ts';
+import {getAuthorizationStatus} from '../../store/user-process/selectors.ts';
 
-type OfferScreenProps = {
+type OfferPageProps = {
   favorites: Offer[];
 }
 
-function OfferPage({favorites}: OfferScreenProps): JSX.Element {
-  const { id } = useParams();
-  const user = useAppSelector((state) => state.authorizationStatus);
+const AVATAR_SIZE = '74';
 
-  const { offerInfo, nearestOffers, reviews } = useAppSelector(
-    ({ currentOffer }) => ({
-      offerInfo: currentOffer.offerInfo,
-      nearestOffers: currentOffer.nearestOffers,
-      reviews: currentOffer.reviews,
-    })
-  );
+function OfferPage({favorites}: OfferPageProps): JSX.Element {
+  const {id} = useParams();
+
+  const user = useAppSelector(getAuthorizationStatus);
+  const {offerInfo, nearestOffers, reviews} = useAppSelector(selectCurrentOfferData);
 
   const points: Points[] = nearestOffers.map((offer) => ({
     id: offer.id,
@@ -44,24 +41,25 @@ function OfferPage({favorites}: OfferScreenProps): JSX.Element {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchOfferDataAction({ id: id ?? '' }));
-  }, [id]);
+    dispatch(fetchOfferDataAction({id: id ?? ''}));
+  }, [dispatch, id]);
   if (!offerInfo) {
     return <div className="container">Loading</div>;
   }
-  return(
+  return (
     <div className="page">
       <Hat favorites={favorites}/>
-
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
+
               {offerInfo.images.map((url) => (
                 <div className="offer__image-wrapper" key={url}>
-                  <img className="offer__image" src={url} alt="Photo studio" />
+                  <img className="offer__image" src={url} alt="Photo studio"/>
                 </div>
               ))}
+
             </div>
           </div>
           <div className="offer__container container">
@@ -83,7 +81,7 @@ function OfferPage({favorites}: OfferScreenProps): JSX.Element {
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
                   <span
-                    style={{ width: `${getRating(offerInfo.rating)}` }}
+                    style={{width: `${getRating(offerInfo.rating)}`}}
                   />
                   <span className="visually-hidden">Rating</span>
                 </div>
@@ -99,7 +97,7 @@ function OfferPage({favorites}: OfferScreenProps): JSX.Element {
                   {`${offerInfo.bedrooms} Bedrooms`}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max 4 adults
+                  {`Max ${offerInfo.maxAdults} adults`}
                 </li>
               </ul>
               <div className="offer__price">
@@ -124,7 +122,13 @@ function OfferPage({favorites}: OfferScreenProps): JSX.Element {
                       offerInfo.host.isPro ? 'offer__avatar-wrapper--pro' : ''
                     } user__avatar-wrapper`}
                   >
-                    <img className="offer__avatar user__avatar" src={offerInfo.host.avatarUrl} width={AVATAR_SIZE} height={AVATAR_SIZE} alt="Host avatar" />
+                    <img
+                      className="offer__avatar user__avatar"
+                      src={offerInfo.host.avatarUrl}
+                      width={AVATAR_SIZE}
+                      height={AVATAR_SIZE}
+                      alt="Host avatar"
+                    />
                   </div>
                   <span className="offer__user-name">
                     {offerInfo.host.name}
@@ -138,9 +142,11 @@ function OfferPage({favorites}: OfferScreenProps): JSX.Element {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <h2 className="reviews__title">
+                  Reviews &middot; <span className="reviews__amount">{reviews.length}</span>
+                </h2>
                 <ListOfReviews reviews={reviews}/>
-                {user === AuthorizationStatus.Auth && <CommentSubmissionForm id={id!} />}
+                {user === AuthorizationStatus.Auth && <CommentSubmissionForm id={id!}/>}
               </section>
             </div>
           </div>
@@ -150,8 +156,10 @@ function OfferPage({favorites}: OfferScreenProps): JSX.Element {
         </section>
         <div className="container">
           <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <ListOfCityCards cities={nearestOffers.slice(0, 3)} listType={'near'}/>
+            <h2 className="near-places__title">
+              Other places in the neighbourhood
+            </h2>
+            <OfferCards cities={nearestOffers.slice(0, 3)} listType={'near'}/>
           </section>
         </div>
       </main>

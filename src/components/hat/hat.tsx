@@ -3,6 +3,7 @@ import {Offer} from '../../types/offer.ts';
 import {useAppDispatch, useAppSelector} from '../../hooks/index.ts';
 import {AuthorizationStatus} from '../../consts/autorization-status.tsx';
 import { logoutAction } from '../../store/api-actions.ts';
+import {getAuthorizationStatus, getUserEmail} from '../../store/user-process/selectors.ts';
 
 
 type HatProps = {
@@ -14,8 +15,8 @@ const LOGO_HEIGHT = '41';
 
 function Hat({favorites}: HatProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.authorizationStatus);
-  const userEmail = useAppSelector((state) => state.userEmail);
+  const user = useAppSelector(getAuthorizationStatus);
+  const userEmail = useAppSelector(getUserEmail);
   const handleSignOut = () => {
     dispatch(logoutAction());
   };

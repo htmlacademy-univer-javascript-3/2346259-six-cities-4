@@ -1,47 +1,67 @@
-import Favorites from '../../pages/favorites-page/favorites-page';
-import Login from '../../pages/login-page/login-page';
-import MainPage from '../../pages/main-page/main-page';
 import {Route, Routes} from 'react-router-dom';
-import OfferPage from '../../pages/offer-page/offer-page';
-import Error404 from '../../pages/error-404/error-404';
-import PrivateRoute from '../private-route/private-route';
-import { AuthorizationStatus } from '../../consts/autorization-status';
-import { Offer } from '../../types/offer.ts';
+import MainPage from '../../pages/main-page/main-page.tsx';
+import LoginScreen from '../../pages/login-page/login-page.tsx';
+import FavoritesPage from '../../pages/favorites-page/favorites-page.tsx';
+import Error404 from '../../pages/error-404/error-404.tsx';
+import OfferPage from '../../pages/offer-page/offer-page.tsx';
+import PrivateRoute from '../private-route/private-route.tsx';
+import {Offer} from '../../types/offer.ts';
 import {useAppSelector} from '../../hooks/index.ts';
 import LoadingScreen from '../../pages/loading-screen/loading.screen.tsx';
 import browserHistory from '../../browser-history.tsx';
 import HistoryRouter from '../history-router/history-router.tsx';
+import {
+  getIsOffersDataLoading,
+  getOffers,
+} from '../../store/offers-process/selectors.ts';
+import {getAuthorizationStatus} from '../../store/user-process/selectors.ts';
+import {AppRoute} from '../../consts/consts.tsx';
+import { AuthorizationStatus } from '../../consts/autorization-status.tsx';
+
 
 function App(): JSX.Element {
-  const offers: Offer[] = useAppSelector((state) => state.offers);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const offers: Offer[] = useAppSelector(getOffers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
     return (
       <LoadingScreen/>
     );
   }
+
   const favorites = offers.filter((o) => o.isFavorite);
-  return(
+  return (
     <HistoryRouter history={browserHistory}>
       <Routes>
-        <Route path='/'>
-          <Route index element = {<MainPage favorites={favorites}/>}></Route>
-          <Route path='login' element={<Login />}></Route>
-          <Route path='favorites' element={
-            <PrivateRoute authorizationStatus={authorizationStatus}>
-              <Favorites favorites={favorites}/>
+        <Route
+          path={AppRoute.Main}
+          element={<MainPage favorites={favorites}/>}
+        />
+        <Route
+          path={AppRoute.Login}
+          element={<LoginScreen/>}
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute
+              authorizationStatus={authorizationStatus}
+            >
+              <FavoritesPage favorites={favorites}/>
             </PrivateRoute>
           }
-          >
-          </Route>
-          <Route path='offer/:id' element={<OfferPage favorites={favorites}/>}></Route>
-        </Route>
-        <Route path='*' element={<Error404 />}></Route>
+        />
+        <Route
+          path={AppRoute.Offer}
+          element={<OfferPage favorites={favorites}/>}
+        />
+        <Route
+          path="*"
+          element={<Error404/>}
+        />
       </Routes>
     </HistoryRouter>
-    //<MainPage offersNumber={offersNumber}/>
   );
 }
 

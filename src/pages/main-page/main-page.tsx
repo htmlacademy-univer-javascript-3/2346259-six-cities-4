@@ -1,34 +1,32 @@
-//import OfferCard from '../../components/offer-card/offer-card';
-import OfferCards from '../../components/offer-cards/offer-cards';
-import { Offer } from '../../types/offer';
+import OfferCards from '../../components/offer-cards/offer-cards.tsx';
+import {Offer} from '../../types/offer.ts';
 import Map from '../../components/map/map.tsx';
 import {useAppSelector} from '../../hooks/index.ts';
-import {useEffect, useState} from 'react';
+import {useMemo} from 'react';
 import CitiesList from '../../components/list-of-cities/list-of-cities.tsx';
 import {Cities} from '../../consts/consts.tsx';
 import CityCardsSorting from '../../components/city-cards-sorting/city-cards-sorting.tsx';
 import Hat from '../../components/hat/hat.tsx';
+import {getOffers} from '../../store/offers-process/selectors.ts';
+import {getCity} from '../../store/other-process/selectors.ts';
+
 
 type MainPageProps = {
   favorites: Offer[];
 }
 
-
 function MainPage({favorites}: MainPageProps): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(getOffers);
+  const city = useAppSelector(getCity);
 
-  const [curCityOffers, setCurCityOffers] = useState<Offer[]>(offers);
+  const curCityOffers = useMemo(
+    () => offers.filter((offer) => offer.city.name === city),
+    [offers, city]
+  );
 
-
-  const city = useAppSelector((state) => state.city);
-  useEffect(() => {
-    const filteredOffers = offers.filter((offer) => offer.city.name === city);
-    setCurCityOffers(filteredOffers);
-  }, [city, offers]);
   return (
     <div className="page page--gray page--main">
       <Hat favorites={favorites}/>
-
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -40,11 +38,9 @@ function MainPage({favorites}: MainPageProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">`${curCityOffers.length} places to stay in ${city}`</b>
+              <b className="places__found">{`${curCityOffers.length} places to stay in ${city}`}</b>
               <CityCardsSorting/>
-              <div className="cities__places-list places__list tabs__content">
-                <OfferCards cities={curCityOffers} listType={'typical'}/>
-              </div>
+              <OfferCards cities={curCityOffers} listType={'typical'}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
