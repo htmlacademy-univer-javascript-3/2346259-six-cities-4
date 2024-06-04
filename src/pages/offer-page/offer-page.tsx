@@ -12,10 +12,14 @@ import {getRating} from '../../utils.ts';
 import {AuthorizationStatus} from '../../consts/autorization-status.tsx';
 import {selectCurrentOfferData} from '../../store/selectors.ts';
 import {getAuthorizationStatus} from '../../store/user-process/selectors.ts';
+import AddToFavoritesButton from '../../components/add-to-favorites-button/add-to-favorites-button.tsx';
 
 type OfferPageProps = {
   favorites: Offer[];
 }
+
+const BOOKMARK_ICON_WIDTH = 30;
+const BOOKMARK_ICON_HEIGHT = 32;
 
 const AVATAR_SIZE = '74';
 
@@ -69,14 +73,20 @@ function OfferPage({favorites}: OfferPageProps): JSX.Element {
                   <span>Premium</span>
                 </div>
               )}
-              <div className="offer__name-wrapper">
+              <div className="offer__name-wrapper"
+                style={{display: 'flex', justifyContent: 'space-between', alignItems: 'stretch'}}
+              >
                 <h1 className="offer__name">{offerInfo.title}</h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <AddToFavoritesButton
+                  id={offerInfo.id}
+                  isFavorite={offerInfo.isFavorite}
+                  iconWidth={BOOKMARK_ICON_WIDTH}
+                  iconHeight={BOOKMARK_ICON_HEIGHT}
+                  buttonClass="place-card__bookmark-button"
+                  activeClass="place-card__bookmark-button--active"
+                  iconClass="place-card__bookmark-icon"
+                  buttonText="In bookmarks"
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">

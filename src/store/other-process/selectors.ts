@@ -1,4 +1,4 @@
-import { NameSpace } from '../../consts/consts';
+import {NameSpace} from '../../consts/consts';
 import {State} from '../../types/state';
 
 export const getCity = (state: State) => state[NameSpace.Other].city;

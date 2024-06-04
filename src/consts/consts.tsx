@@ -1,7 +1,3 @@
-// const Setting = {
-//   offersNumber: 5
-// };
-
 export const Cities = [
   {
     name: 'Paris',
@@ -40,7 +36,8 @@ export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
-  Comments = '/comments'
+  Comments = '/comments',
+  Favorite = '/favorite'
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
@@ -58,3 +55,9 @@ export enum NameSpace {
   User = 'USER',
 }
 
+export enum FavouriteStatus {
+  Add = 1,
+  Remove = 0,
+}
+
+export const citiesForRandomString = ['Amsterdam', 'Paris', 'Cologne', 'Brussels', 'Hamburg', 'Dusseldorf'];

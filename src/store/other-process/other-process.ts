@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../consts/consts.tsx';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {NameSpace} from '../../consts/consts.tsx';
 import {OtherState} from '../../types/state.ts';
 
 const initialState: OtherState = {
@@ -24,4 +24,4 @@ export const otherProcess = createSlice({
   },
 });
 
-export const { cityChange, sortTypeSelect, setError } = otherProcess.actions;
+export const {cityChange, sortTypeSelect, setError} = otherProcess.actions;
