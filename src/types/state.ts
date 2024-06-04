@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from '../consts/autorization-status';
+import {AuthorizationStatus} from '../consts/autorization-status';
 import {store} from '../store';
 import {ExtendedOffer, Offer} from './offer';
 import {Review} from './review';
@@ -23,6 +23,7 @@ export type OffersState = {
     id: string;
   } | null;
   isOffersDataLoading: boolean;
+  favorites: Offer[];
 };
 
 export type OtherState = {
