@@ -18,7 +18,7 @@ function OfferCards({cities, listType}: OfferCardsProps) {
       className={`${listType === 'typical' ? 'cities__places-list places__list tabs__content' : 'near-places__list places__list'}`}
     >
       {getSorting(cities, selectedSortType).map((city) => (
-        <OfferCard key={city.id} cityCardInfo={city} cityCardType={listType}/>
+        <OfferCard key={city.id} offerCardInfo={city} offerCardType={listType}/>
       ))}
     </div>
   );
