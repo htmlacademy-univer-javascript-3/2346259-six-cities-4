@@ -91,7 +91,7 @@ function OfferPage({favorites}: OfferPageProps): JSX.Element {
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
                   <span
-                    style={{width: `${getRating(offerInfo.rating)}`}}
+                    style={{width: `${getRating(Math.round(offerInfo.rating))}`}}
                   />
                   <span className="visually-hidden">Rating</span>
                 </div>

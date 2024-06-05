@@ -55,6 +55,6 @@ test('Работоспособность сортировки карточек �
     .allTextContents();
 
   for (let i = 0; i < pricesAfterSorting.length; i++) {
-    pricesAfterSorting[i] === pricesBeforeSorting[i];
+    expect(pricesAfterSorting[i]).toBe(pricesBeforeSorting[i]);
   }
 });
