@@ -16,7 +16,7 @@ function CityCardsSorting() {
   };
   return (
     <form className="places__sorting" action="#" method="get" onClick={() => setIsOpen(!isOpen)}>
-      <span className="places__sorting-caption">Sort by</span>
+      <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex={0}>
         {selectedSortType}
         <svg className="places__sorting-arrow" width={SORTING_WIDTH} height={SORTING_HEIGHT}>

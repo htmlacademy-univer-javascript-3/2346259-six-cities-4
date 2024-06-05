@@ -8,7 +8,7 @@ import {citiesForRandomString} from '../../consts/consts.tsx';
 const LOGO_WIDTH = '81';
 const LOGO_HEIGHT = '41';
 
-function LoginScreen(): JSX.Element {
+function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -39,7 +39,7 @@ function LoginScreen(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="#">
+              <Link className="header__logo-link" to="#">
                 <img
                   className="header__logo"
                   src="img/logo.svg"
@@ -47,7 +47,7 @@ function LoginScreen(): JSX.Element {
                   width={LOGO_WIDTH}
                   height={LOGO_HEIGHT}
                 />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -95,4 +95,4 @@ function LoginScreen(): JSX.Element {
   );
 }
 
-export default LoginScreen;
+export default LoginPage;
