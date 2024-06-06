@@ -2,6 +2,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks';
 import {memo} from 'react';
 import {cityChange} from '../../store/other-process/other-process';
 import {getCity} from '../../store/other-process/selectors';
+import { Link } from 'react-router-dom';
 
 
 type CitiesListProps = {
@@ -15,11 +16,11 @@ type CityProps = {
 };
 const City = ({name, cityChangeName, isActive}: CityProps): JSX.Element => (
   <li className="locations__item" onClick={() => cityChangeName(name)}>
-    <a className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`}
-      href="#"
+    <Link className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`}
+      to="#"
     >
       <span>{name}</span>
-    </a>
+    </Link>
   </li>
 );
 
